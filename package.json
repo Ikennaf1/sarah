@@ -1,0 +1,16 @@
+{
+  "name": "sarah",
+  "version": "1.0.0",
+  "description": "Child theme for the twenty-twenty-three wordpress theme",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "npx tailwindcss -i ./src/css/input.css -o ./sarah.css --watch",
+    "build": "npx tailwindcss -i ./src/css/input.css -o ./sarah.css --minify"
+  },
+  "author": "Ikenna Isiogu",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.13"
+  }
+}

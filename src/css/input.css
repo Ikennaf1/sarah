@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    scroll-behavior: smooth;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+:root {
+    font-family: 'Josefin Sans', sans-serif !important;
+    --primary-color: #1db381;
+    --primary-color-hover: #197e5c;
+    --secondary-color: #1db381;
+    --secondary-color-hover: #197e5c;
+}
+
+.hero-section {
+    @apply flex flex-col gap-16 md:flex-row md:items-center md:justify-between lg:gap-24;
+}
+
+.hero-flex-1 {
+    @apply md:flex-1;
+}
+
+.hero-cta {
+    @apply block md:flex md:gap-4 md:items-center md:justify-start;
+}
+
+.hero-texts {
+    @apply order-2 md:order-1;
+}
+
+.hero-cta-btn {
+    @apply w-full md:w-auto px-4 py-2 rounded-xl;
+}
+
+.hero-cta-btn-book-me {
+    @apply text-white bg-primary-color hover:bg-primary-color-hover transition duration-500;
+}
+
+.hero-cta-btn-question-me {
+    @apply text-primary-color bg-none border border-primary-color hover:border-primary-color-hover hover:text-primary-color-hover transition duration-500;
+}
+
+.hero-pic {
+    @apply order-1 md:order-2;
+}
+
+.hero-profile-picture {
+    @apply w-full h-64 md:h-96 lg:h-[32rem] rounded-3xl overflow-hidden;
+}
+
+.name-hero {
+    @apply text-black font-bold text-3xl md:text-4xl lg:text-6xl;
+}
+
+.title-hero {
+    @apply font-bold md:font-normal text-xl md:text-2xl lg:text-3xl;
+}
+
+.contact-icons-container {
+    @apply flex justify-between gap-8 items-center shadow-lg rounded-3xl w-full h-16 px-4 text-black overflow-x-auto;
+}
+
+.contact-icons-container a {
+    @apply text-black hover:text-primary-color-hover transition duration-500;
+}
