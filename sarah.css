@@ -608,14 +608,6 @@ video {
   height: 4rem;
 }
 
-.h-64{
-  height: 16rem;
-}
-
-.h-96{
-  height: 24rem;
-}
-
 .h-4{
   height: 1rem;
 }
@@ -624,12 +616,12 @@ video {
   height: 1.5rem;
 }
 
-.w-auto{
-  width: auto;
+.h-64{
+  height: 16rem;
 }
 
-.w-full{
-  width: 100%;
+.h-96{
+  height: 24rem;
 }
 
 .w-4{
@@ -638,6 +630,14 @@ video {
 
 .w-6{
   width: 1.5rem;
+}
+
+.w-auto{
+  width: auto;
+}
+
+.w-full{
+  width: 100%;
 }
 
 .border-collapse{

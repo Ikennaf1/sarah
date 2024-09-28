@@ -6,7 +6,6 @@
 */
 
 add_action( 'wp_enqueue_scripts', 'sarah_enqueue_styles' );
-add_action('admin_init', 'sarah_settings_init');
 
 function sarah_enqueue_styles() {
 	wp_enqueue_style( 
@@ -28,6 +27,14 @@ function sarah_enqueue_styles() {
 function sarah_settings_init() {
 	// register a new setting for "general" page
 	register_setting('general', 'sarah_settings');
+	register_setting('general', 'display_name');
+	register_setting('general', 'user_title');
+	register_setting('general', 'user_bio');
+	register_setting('general', 'cta_text');
+	register_setting('general', 'sarah_socials_facebook');
+	register_setting('general', 'sarah_socials_instagram');
+	register_setting('general', 'sarah_socials_x');
+	register_setting('general', 'sarah_socials_linkedin');
 
 	// register a new section in the "general" page
 	add_settings_section(
@@ -64,12 +71,42 @@ function sarah_settings_init() {
 		'general',
 		'sarah_settings_section'
 	);
+
+	add_settings_field(
+		'sarah_socials_facebook',
+		'Facebook', 'sarah_socials_facebook_field_callback',
+		'general',
+		'sarah_settings_section'
+	);
+
+	add_settings_field(
+		'sarah_socials_instagram',
+		'Instagram', 'sarah_socials_instagram_field_callback',
+		'general',
+		'sarah_settings_section'
+	);
+	
+	add_settings_field(
+		'sarah_socials_x',
+		'X', 'sarah_socials_x_field_callback',
+		'general',
+		'sarah_settings_section'
+	);
+	
+	add_settings_field(
+		'sarah_socials_linkedin',
+		'LinkedIn', 'sarah_socials_linkedin_field_callback',
+		'general',
+		'sarah_settings_section'
+	);
 }
 
 /**
  * register sarah_settings_init to the admin_init action hook
  */
+add_action( 'rest_api_init', 'sarah_settings_init' );
 add_action('admin_init', 'sarah_settings_init');
+// do_action('register_setting', 'general', 'sarah_settings');
 
 // section content cb
 function sarah_settings_section_callback() {
@@ -109,7 +146,43 @@ function sarah_cta_settings_field_callback() {
 	$setting = get_option('cta_text');
 	// output the field
 	?>
-	<input type="text" name="cta_text" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
+	<input type="text" name="cta_text" placeholder="Book me" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
+    <?php
+}
+
+function sarah_socials_facebook_field_callback() {
+	// get the value of the setting we've registered with register_setting()
+	$setting = get_option('facebook');
+	// output the field
+	?>
+	<input type="text" name="sarah_socials_facebook" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
+    <?php
+}
+
+function sarah_socials_instagram_field_callback() {
+	// get the value of the setting we've registered with register_setting()
+	$setting = get_option('instagram');
+	// output the field
+	?>
+	<input type="text" name="sarah_socials_instagram" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
+    <?php
+}
+
+function sarah_socials_x_field_callback() {
+	// get the value of the setting we've registered with register_setting()
+	$setting = get_option('x');
+	// output the field
+	?>
+	<input type="text" name="sarah_socials_x" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
+    <?php
+}
+
+function sarah_socials_linkedin_field_callback() {
+	// get the value of the setting we've registered with register_setting()
+	$setting = get_option('linkedin');
+	// output the field
+	?>
+	<input type="text" name="sarah_socials_linkedin" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
     <?php
 }
 
@@ -153,4 +226,41 @@ function themeGetContacts()
           
         ]
     ];
+}
+
+/******************
+ | Prep vars |
+ ******************
+*/
+function sarah_init()
+{
+	$display_name = get_option('display_name');
+	$admin_email = get_bloginfo('admin_email');
+	$admin_user = get_user_by( 'email', $admin_email );
+	$admin_name = $admin_user
+		? $admin_user->get('first_name') . ' ' . $admin_user->get('last_name')
+		: 'Unknown';
+	$name = $display_name ? $display_name : $admin_name;
+
+	$user_bio = get_option('user_bio');
+	$tagline = get_bloginfo('description');
+	$bio = $user_bio ? $user_bio : $tagline;
+
+	$cta = get_option('cta_text');
+	$cta = !empty($cta)
+		? $cta
+		: 'Book me';
+
+	$user_title = get_option('user_title');
+	$user_title = !empty($user_title)
+		? $user_title
+		: 'Copywriter';
+	
+	return [
+		'admin-email' => $admin_email,
+		'name' => $name,
+		'bio' => $bio,
+		'cta' => $cta,
+		'user-title' => $user_title
+	];
 }
